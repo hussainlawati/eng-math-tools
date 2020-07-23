@@ -1,0 +1,41 @@
+class Solution:
+    def isNumber(s: str):
+        integers = False
+        l = []
+        n=0
+        eflag=False
+        alpha=False
+        for i in range(len(s)):
+            try:
+                if int(s[n])/1==int(s[n]):
+                    l.append(s[n])
+                    n+=1
+                    integers=True
+                    if eflag==True:
+                        eflag=False
+            except ValueError:
+                if s[n]=="e":
+                    eflag=True
+                    if n>=1:
+                        l.append(s[n])
+                        n+=1
+                    else:
+                        integers=False
+                else:
+                    if s[n]=="-" or s[n]==".":
+                        if s[n-1]=="-" or s[n-1]==".":
+                            alpha=True
+                            n+=1
+                        else:
+                            n+=1
+                    else:
+                        alpha=True
+            if eflag==False and alpha==False:
+                integers=True
+            else:
+                integers=False
+        return integers
+
+y=Solution
+
+print(y.isNumber(s=""))
