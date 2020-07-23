@@ -1,0 +1,48 @@
+import numpy as np
+
+# class d-h matrix
+class DHMat():
+    def __init__(self,  *args):
+        #do not input a list of list, just lists of your joint vars seperated by commas
+        # 1 arg should have: [theta,alpha,r,d]
+        self.arrays=args
+        self.myarr()
+
+
+    # defines your d-h array from input lists
+    def myarr(self):
+        self.alldh = {}
+        k = 0
+        for arg in self.arrays:
+            if len(arg) == 4:
+                t = arg[0]
+                a = arg[1]
+                r = arg[2]
+                d = arg[3]
+                k+=1
+                mdh = np.array([[np.cos(t), np.sin(t) * np.cos(a), np.sin(t) * np.sin(a), r * np.cos(t)],
+                                [np.sin(t), np.cos(t) * np.cos(a), -np.cos(t) * np.sin(a), r * np.sin(t)],
+                                [0, np.sin(a), np.cos(a), d],
+                                [0, 0, 0, 1]], dtype='float32')
+                self.alldh.update({k: mdh})
+        return self.alldh
+
+
+    # useful for larger systems with too many joints to count
+    def joints(self):
+        j=0
+        for i in self.alldh:
+            j+=1
+        return j
+
+    #specify the transform degree required; normal rules applies implicitly, for example can't go for a transform deeper than your available states and similarly can't do y-axis translations
+    def multarray(self,depth):
+        # first/ 0th degree
+        self.out = np.multiply(self.alldh[depth], self.alldh[depth-1])
+        for n in range(depth-2, 0):
+            self.out = np.multiply(self.out, self.alldh[n])
+        return self.out
+
+
+s=DHMat([0, 0, 1, 1], [0, 0, 2, 2], [0, 0, 3, 3])
+print(s.multarray(3))
