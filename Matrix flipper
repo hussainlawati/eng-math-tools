@@ -1,0 +1,28 @@
+#made this before going deeper into python, this can be done in a single line using numpy
+def matrix_flipper(matrix):
+    flipped_matrix=[]
+    for j in range(0, len(matrix[0])):
+        line=[]
+        for i in range(0, len(matrix)):
+                line.append(matrix[i][j])
+        flipped_matrix.append(line)
+    return flipped_matrix
+
+
+
+# demonstration:
+# matrix of choice
+grid = [['.', 'H', '.', '.', 'H', '.'],
+        ['.', 'H', '.', '.', 'H', '.'],
+        ['.', 'H', '.', '.', 'H', '.'],
+        ['.', 'H', '.', '.', 'H', '.'],
+        ['.', 'H', 'H', 'H', 'H', '.'],
+        ['.', 'H', 'H', 'H', 'H', '.'],
+        ['.', 'H', '.', '.', 'H', '.'],
+        ['.', 'H', '.', '.', 'H', '.'],
+        ['.', 'H', '.', '.', 'H', '.']]
+
+grid2 = matrix_flipper(grid)
+#neat printing demo, not needed for actual calc
+for i in grid2:
+    print(i)
