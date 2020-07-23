@@ -1,2 +1,3 @@
 # eng-math-tools
-Basic helpers that save time
+<!DOCTYPE html>
+<h3> Helper functions that save time </h3>
